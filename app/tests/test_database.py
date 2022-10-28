@@ -26,5 +26,9 @@ class DatabaseTests(unittest.TestCase):
         """Test that the total number of items returns the correct value."""
         self.assertEquals(self.db_mod.get_total_number_items(), 8218165, 'Test total items returns correct value')
 
+    def test_get_percentage_of_top_item(self):
+        """Test that the percentage of top item returns the correct value."""
+        self.assertEquals(self.db_mod.get_percentage_of_top_item(), 2.75, 'Test top item returns correct value')
+
 if __name__ == "__main__":
     unittest.main()

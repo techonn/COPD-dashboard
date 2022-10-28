@@ -32,3 +32,16 @@ class Database:
     def get_n_data_for_PCT(self, pct, n):
         """Return all the data for a given PCT."""
         return db.session.query(PrescribingData).filter(PrescribingData.PCT == pct).limit(n).all()
+
+    def get_number_of_top_BNF_item(self):
+        """Return the top quantity of prescribed item among BNF codes."""
+        return db.session.query(func.sum(PrescribingData.items)).\
+            group_by(PrescribingData.BNF_code).\
+            order_by(func.sum(PrescribingData.items).desc()).first()[0]
+
+    def get_percentage_of_top_item(self):
+        percentage = self.get_number_of_top_BNF_item()/self.get_total_number_items()
+        return round(float(percentage)*100, 2)
+
+
+

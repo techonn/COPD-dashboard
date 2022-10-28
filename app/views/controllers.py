@@ -42,12 +42,13 @@ def home():
 
 def generate_data_for_tiles():
     """Generate the data for the four home page titles."""
-    return [db_mod.get_total_number_items()]
+    return [db_mod.get_total_number_items(), "", "", db_mod.get_percentage_of_top_item()]
 
 def generate_barchart_data():
     """Generate the data needed to populate the barchart."""
     data_values = db_mod.get_prescribed_items_per_pct()
     pct_codes = db_mod.get_distinct_pcts()
+
 
     # convert into lists and return
     data_values = [r[0] for r in data_values]
