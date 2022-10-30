@@ -32,3 +32,6 @@ class Database:
     def get_n_data_for_PCT(self, pct, n):
         """Return all the data for a given PCT."""
         return db.session.query(PrescribingData).filter(PrescribingData.PCT == pct).limit(n).all()
+    def get_average_ACT(self):
+        """Return Average ACT cost """
+        return db.session.query(func.avg(PrescribingData.ACT_cost)).first()[0]
