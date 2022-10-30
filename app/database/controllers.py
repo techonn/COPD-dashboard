@@ -35,3 +35,16 @@ class Database:
     def get_average_ACT(self):
         """Return Average ACT cost """
         return db.session.query(func.avg(PrescribingData.ACT_cost)).first()[0]
+
+    def get_number_of_top_BNF_item(self):
+        """Return the top quantity of prescribed item among BNF codes."""
+        return db.session.query(func.sum(PrescribingData.items)).\
+            group_by(PrescribingData.BNF_code).\
+            order_by(func.sum(PrescribingData.items).desc()).first()[0]
+
+    def get_percentage_of_top_item(self):
+        percentage = self.get_number_of_top_BNF_item()/self.get_total_number_items()
+        return round(float(percentage)*100, 2)
+
+
+
