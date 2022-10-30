@@ -25,6 +25,10 @@ class DatabaseTests(unittest.TestCase):
     def test_get_total_number_items(self):
         """Test that the total number of items returns the correct value."""
         self.assertEquals(self.db_mod.get_total_number_items(), 8218165, 'Test total items returns correct value')
+    
+    def test_get_average_ACT(self):
+        """Test that the average of actual cost returns the correct value."""
+        self.assertEquals(self.db_mod.get_average_ACT(), 76.221, 'Test average act cost returns correct value')
 
     def test_get_percentage_of_top_item(self):
         """Test that the percentage of top item returns the correct value."""
