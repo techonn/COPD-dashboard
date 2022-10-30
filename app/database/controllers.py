@@ -32,3 +32,7 @@ class Database:
     def get_n_data_for_PCT(self, pct, n):
         """Return all the data for a given PCT."""
         return db.session.query(PrescribingData).filter(PrescribingData.PCT == pct).limit(n).all()
+
+    def get_unique_number_of_items(self):
+        """Return the number of unique items."""
+        return (db.session.query(PrescribingData.BNF_code).distinct().count())

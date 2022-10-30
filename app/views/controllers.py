@@ -40,9 +40,9 @@ def home():
                            pct={'data': bar_values, 'labels': bar_labels},
                            pct_list=pcts, pct_data=selected_pct_data)
 
-def generate_data_for_tiles():
+def generate_data_for_tiles(pct=None, n=None):
     """Generate the data for the four home page titles."""
-    return [db_mod.get_total_number_items()]
+    return [db_mod.get_total_number_items(), db_mod.get_prescribed_items_per_pct(), db_mod.get_distinct_pcts(), db_mod.get_n_data_for_PCT(pct, n), db_mod.get_unique_number_of_items()]
 
 def generate_barchart_data():
     """Generate the data needed to populate the barchart."""
