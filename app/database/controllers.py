@@ -32,6 +32,7 @@ class Database:
     def get_n_data_for_PCT(self, pct, n):
         """Return all the data for a given PCT."""
         return db.session.query(PrescribingData).filter(PrescribingData.PCT == pct).limit(n).all()
+    
     def get_average_ACT(self):
         """Return Average ACT cost """
         return db.session.query(func.avg(PrescribingData.ACT_cost)).first()[0]
@@ -45,6 +46,7 @@ class Database:
     def get_percentage_of_top_item(self):
         percentage = self.get_number_of_top_BNF_item()/self.get_total_number_items()
         return round(float(percentage)*100, 2)
-
-
-
+    
+    def get_unique_number_of_items(self):
+        """Return the number of unique items."""
+        return (db.session.query(PrescribingData.BNF_code).distinct().count())
