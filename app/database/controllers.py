@@ -9,6 +9,7 @@ DESCRIPTION:   Contains the Database class that contains all the methods used fo
 
 from sqlalchemy.sql import func
 from flask import Blueprint
+from sqlalchemy import desc
 
 from app import db
 from app.database.models import PrescribingData, PracticeData
@@ -42,6 +43,10 @@ class Database:
         return db.session.query(func.sum(PrescribingData.items)).\
             group_by(PrescribingData.BNF_code).\
             order_by(func.sum(PrescribingData.items).desc()).first()[0]
+
+    def get_top_prescribed_item(self):
+        """ Return top prescribed drug."""
+        return db.session.query(PrescribingData).group_by(PrescribingData.BNF_name).order_by(desc(PrescribingData.items)).first().BNF_name
 
     def get_percentage_of_top_item(self):
         percentage = self.get_number_of_top_BNF_item()/self.get_total_number_items()
