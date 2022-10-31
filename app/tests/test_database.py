@@ -28,7 +28,7 @@ class DatabaseTests(unittest.TestCase):
     
     def test_get_average_ACT(self):
         """Test that the average of actual cost returns the correct value."""
-        self.assertEquals(self.db_mod.get_average_ACT(), 76.221, 'Test average act cost returns correct value')
+        self.assertEquals(self.db_mod.get_average_ACT(), 76.22065025148007, 'Test average act cost returns correct value')
 
     def test_get_top_prescribed_item(self):
         """Test that the top prescribed item returns the correct value."""
