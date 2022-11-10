@@ -55,3 +55,21 @@ class Database:
     def get_unique_number_of_items(self):
         """Return the number of unique items."""
         return (db.session.query(PrescribingData.BNF_code).distinct().count())
+    
+    def get_percentage_of_inf_drug_gr(self):
+        drug4 = {'Antibacterial':['0501'],
+                 'Antifungal':['0502'],
+                 'Antiviral':['0503'],
+                 'Antiprotozoal':['0504'],
+                 'Anthelmintics':['0505']}
+        drug6 = {'Antibacterial':['131001', '110301'],
+                 'Antifungal':['131002', '110302'],
+                 'Antiviral':['131003', '110303'],
+                 'Antiprotozoal':[],
+                 'Anthelmintics':[]}
+        data = db.session.query(PrescribingData.BNF_code, func.sum(PrescribingData.items)).group_by(PrescribingData.BNF_code).all()
+        num_drug = []
+        for drug_name in ['Antibacterial', 'Antifungal', 'Antiviral','Antiprotozoal','Anthelmintics']:
+            num_drug.append((drug_name,sum([y if x[0:4] in drug4[drug_name] or x[0:6] in drug6[drug_name] else 0 for x,y,*z in data])))
+        total_drug = sum([y for x,y in num_drug])
+        return [(x,y*1.0/total_drug) for x,y in num_drug]
