@@ -53,7 +53,7 @@ Cyan is a dashboard that shows insights regarding drug prescription. It serves t
 * Assess local needs
 * Rank priorities and develop strategies to meet the public's medical needs
 * Distribute the NHS budget given to their CCG a) Buying services on behalf of the population from providers including hospitals, clinics, community health bodies, etc
-* Ensuring the services and pathways in which medicines are utilized are set to standards that provide cost-effective use of resources, reduced risks associated with medicines use, and improved patient outcomes.
+* Ensuring the services and pathways in which medicines are utilized are set to standards that provide cost-effective use of resources, reduced risks associated with medicines use, and improved patient outcomes
 
 ### Features
 
@@ -63,8 +63,8 @@ All the features displayed on the dashboard:
 * Description of the max quantity item
 * Percentage of the top prescribed drug among all the prescriptions
 * Number of unique items in the data
-* A creatinine clearance calculator acting as a clinical support tool for physicians.
-* Details about the purpose of your dashboard, explanation about features and data used with details of the team.
+* A creatinine clearance calculator acting as a clinical support tool for physicians
+* Details about the purpose of the dashboard
 * Percentage of infection treatment drug out of all infection treatments 
 
 ### Data Used
