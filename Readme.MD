@@ -80,21 +80,21 @@ https://digital.nhs.uk/data-and-information/areas-of-interest/prescribing/practi
 <!-- GETTING STARTED -->
 ## Getting Started
 
-conda install flask
-conda install flask-sqlalchemy
-conda install nose2
-git clone https://github.com/eedrobup/cyan.git
+conda install flask <br />
+conda install flask-sqlalchemy <br />
+conda install nose2 <br />
+git clone https://github.com/eedrobup/cyan.git <br />
 cd cyan
 
 ### Running the Dashboard
 
-Open terminal and run the following commands:
-cd cyan
+Open terminal and run the following commands: <br />
+cd cyan <br />
 python run.py
 
 ### Testing the Dashboard
 
-cd cyan
+cd cyan <br />
 nose2
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
