@@ -1,11 +1,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/eedrobup/cyan">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
 
-  <h3 align="center">The Best BNF Dashboard ever created</h3>
+  <h3 align="center">Cyan Dashboard</h3>
 
   <p align="center">
     An awesome Dashboard
@@ -45,8 +42,6 @@
 
 <!-- CYAN DASHBOARD -->
 ## Cyan Dashboard
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
 Cyan is a dashboard that shows insights regarding drug prescription. It serves to help members of the clinical commissioning group:
 
@@ -104,11 +99,11 @@ nose2
 <!-- Scrum Team Details -->
 ## Scrum Team Details
 
-- Pubordee Aussavavirojekul
-- Alix Har
-- Nishat Girkar
-- Tech Onn Ding
-- Franklin Rajadurai
-- Halimah Fetuga
+- Pubordee Aussavavirojekul (https://www.linkedin.com/in/pubordee-aussavavirojekul-5bb0b611a)
+- Alix Har (https://www.linkedin.com/in/alixhar)
+- Nishat Girkar (www.linkedin.com/in/dr-nishat-g-6b473580)
+- Tech Onn Ding (https://www.linkedin.com/in/techonnding/)
+- Franklin Rajadurai (https://www.linkedin.com/in/franklin-rajadurai-v-6249981bb)
+- Halimah Fetuga (https://www.linkedin.com/in/halimah-fetuga-0b1123111)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
