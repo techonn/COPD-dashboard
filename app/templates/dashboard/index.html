@@ -330,7 +330,9 @@
                   <h6 class="m-0 font-weight-bold text-primary">About the prescribing dashboard</h6>
                 </div>
                 <div class="card-body">
-                  <p>?</p>
+                  <p>
+                    {{ mkd_text|safe }}
+                  </p>
                   <br />
                   <hr />
                    <button type="button" class="btn btn-danger" onclick="popup.hideAboutPopup();">Close</button>
@@ -369,6 +371,9 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2/webcomponents-loader.min.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@1/src/zero-md.min.js"></script>
+  <zero-md src="README.md"></zero-md>
 
 </body>
 
