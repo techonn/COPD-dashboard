@@ -248,6 +248,7 @@
                   <div class="container">
                       <div class="row">
                           <div class="col-md-12">
+
                             {% for i in range(0,(Infection_name|length)) %}
                               <h6 class="progress-title">{{Infection_name[i]}}: {{Infection_percentage[i]}}%</h6>
                               <div class="progress">
@@ -255,7 +256,8 @@
                                       <div class="progress-value"></div>
                                   </div>
                               </div>
-                              {% endfor %}
+                            {% endfor %}
+
                           </div>
                       </div>
 
