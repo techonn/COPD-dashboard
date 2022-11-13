@@ -80,7 +80,7 @@ conda install flask-sqlalchemy <br />
 conda install nose2 <br />
 conda install markdown <br />
 conda install selenium <br />
-download the webdriver <br />
+download the [chrome-webdriver](https://chromedriver.chromium.org/downloads) <br />
 git clone https://github.com/eedrobup/cyan.git <br />
 cd cyan
 
