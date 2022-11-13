@@ -78,6 +78,9 @@ https://digital.nhs.uk/data-and-information/areas-of-interest/prescribing/practi
 conda install flask <br />
 conda install flask-sqlalchemy <br />
 conda install nose2 <br />
+conda install markdown <br />
+conda install selenium <br />
+download the webdriver <br />
 git clone https://github.com/eedrobup/cyan.git <br />
 cd cyan
 
@@ -99,11 +102,11 @@ nose2
 <!-- Scrum Team Details -->
 ## Scrum Team Details
 
-- Pubordee Aussavavirojekul (https://www.linkedin.com/in/pubordee-aussavavirojekul-5bb0b611a)
-- Alix Har (https://www.linkedin.com/in/alixhar)
-- Nishat Girkar (www.linkedin.com/in/dr-nishat-g-6b473580)
-- Tech Onn Ding (https://www.linkedin.com/in/techonnding/)
-- Franklin Rajadurai (https://www.linkedin.com/in/franklin-rajadurai-v-6249981bb)
-- Halimah Fetuga (https://www.linkedin.com/in/halimah-fetuga-0b1123111)
+- Pubordee Aussavavirojekul [Linkedin](https://www.linkedin.com/in/pubordee-aussavavirojekul-5bb0b611a)
+- Alix Har [Linkedin](https://www.linkedin.com/in/alixhar)
+- Nishat Girkar [Linkedin](www.linkedin.com/in/dr-nishat-g-6b473580)
+- Tech Onn Ding [Linkedin](https://www.linkedin.com/in/techonnding/)
+- Franklin Rajadurai [Linkedin](https://www.linkedin.com/in/franklin-rajadurai-v-6249981bb)
+- Halimah Fetuga [Linkedin](https://www.linkedin.com/in/halimah-fetuga-0b1123111)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
