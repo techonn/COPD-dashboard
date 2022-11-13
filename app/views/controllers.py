@@ -43,8 +43,9 @@ def home():
     # render the HTML page passing in relevant data
     return render_template('dashboard/index.html', tile_data=title_data_items,
                            pct={'data': bar_values, 'labels': bar_labels},
-                           pct_list=pcts, pct_data=selected_pct_data, mkd_text=mkd_text,
-                           Infection_name=Infection_name, Infection_percentage=Infection_percentage)
+                           pct_list=pcts, pct_data=selected_pct_data,
+                           Infection_name=Infection_name, Infection_percentage=Infection_percentage,
+                           mkd_text=mkd_text)
 
 def generate_data_for_tiles(pct=None, n=None):
     """Generate the data for the four home page titles."""
