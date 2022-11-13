@@ -36,11 +36,15 @@ def home():
     bar_labels = bar_data[1]
     title_data_items = generate_data_for_tiles()
     mkd_text= generate_about_data()
+    Infection = [('Antibacterial', 0.7971759046162527), ('Antifungal', 0.08877637381401357), ('Antiviral', 0.02680069488782313), ('Antiprotozoal', 0.08520171049310309), ('Anthelmintics', 0.002045316188807555)]
+    Infection_name = [x for x,y in Infection]
+    Infection_percentage = ["{:.2f}".format(y*100) for x,y in Infection]
 
     # render the HTML page passing in relevant data
     return render_template('dashboard/index.html', tile_data=title_data_items,
                            pct={'data': bar_values, 'labels': bar_labels},
-                           pct_list=pcts, pct_data=selected_pct_data, mkd_text=mkd_text)
+                           pct_list=pcts, pct_data=selected_pct_data, mkd_text=mkd_text,
+                           Infection_name=Infection_name, Infection_percentage=Infection_percentage)
 
 def generate_data_for_tiles(pct=None, n=None):
     """Generate the data for the four home page titles."""
