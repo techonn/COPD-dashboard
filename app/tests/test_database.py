@@ -42,5 +42,9 @@ class DatabaseTests(unittest.TestCase):
         """Test that the unique number of items returns the expected value."""
         self.assertEquals(self.db_mod.get_unique_number_of_items(), 13935, 'Test_for_expected value')
 
+    def test_get_percentage_of_inf_drug_gr(self):
+        """Test that the unique number of items returns the expected value."""
+        self.assertEquals(self.db_mod.get_percentage_of_inf_drug_gr(), [('Antibacterial', 0.7971759046162527), ('Antifungal', 0.08877637381401357), ('Antiviral', 0.02680069488782313), ('Antiprotozoal', 0.08520171049310309), ('Anthelmintics', 0.002045316188807555)], 'Test_for_expected list of percentages')
+
 if __name__ == "__main__":
     unittest.main()
