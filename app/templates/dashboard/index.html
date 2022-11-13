@@ -248,36 +248,14 @@
                   <div class="container">
                       <div class="row">
                           <div class="col-md-12">
-                              <h6 class="progress-title">Antibacterial</h6>
+                            {% for i in range(0,(Infection_name|length)) %}
+                              <h6 class="progress-title">{{Infection_name[i]}}: {{Infection_percentage[i]}}%</h6>
                               <div class="progress">
-                                  <div class="progress-bar" style="width:79.72%; background:#FFA500;">
-                                      <div class="progress-value">79.72%</div>
+                                  <div class="progress-bar" style="width:{{Infection_percentage[i]}}%; background:#FFA500;">
+                                      <div class="progress-value"></div>
                                   </div>
                               </div>
-                              <h6 class="progress-title">Antifungal</h6>
-                              <div class="progress">
-                                  <div class="progress-bar" style="width:8.88%; background:#FFA500;">
-                                      <div class="progress-value">8.88%</div>
-                                  </div>
-                              </div>
-                              <h6 class="progress-title">Antiviral</h6>
-                              <div class="progress">
-                                  <div class="progress-bar" style="width:2.68%; background:#FFA500;">
-                                      <div class="progress-value">2.68%</div>
-                                  </div>
-                              </div>
-                              <h6 class="progress-title">Antiprotozoal</h3>
-                              <div class="progress">
-                                  <div class="progress-bar" style="width:8.52%; background:#FFA500;">
-                                      <div class="progress-value">8.52%</div>
-                                  </div>
-                              </div>
-                              <h6 class="progress-title">Anthelmintics</h6>
-                              <div class="progress">
-                                  <div class="progress-bar" style="width:0.2%; background:#FFA500;">
-                                      <div class="progress-value">0.2%</div>
-                                  </div>
-                              </div>
+                              {% endfor %}
                           </div>
                       </div>
 
