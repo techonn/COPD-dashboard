@@ -36,7 +36,7 @@ def home():
     bar_labels = bar_data[1]
     title_data_items = generate_data_for_tiles()
     mkd_text= generate_about_data()
-    Infection = [('Antibacterial', 0.7971759046162527), ('Antifungal', 0.08877637381401357), ('Antiviral', 0.02680069488782313), ('Antiprotozoal', 0.08520171049310309), ('Anthelmintics', 0.002045316188807555)]
+    Infection = generate_data_for_infection()
     Infection_name = [x for x,y in Infection]
     Infection_percentage = ["{:.2f}".format(y*100) for x,y in Infection]
 
@@ -68,3 +68,7 @@ def generate_about_data():
     input_file = open("Readme.MD", mode="r", encoding="utf-8")
     text = input_file.read()
     return markdown(text)
+
+def generate_data_for_infection():
+    """genereate percentage for infection drug group"""
+    return db_mod.get_percentage_of_inf_drug_gr()
