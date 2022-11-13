@@ -330,6 +330,71 @@
               </div>
           </div>
 
+
+          <script type= text/javascript></script>
+              function calcCreatine()
+              {
+                  var sexInput=document.querySelector('input[name="sex"]:checked).value;
+                  var ageInput=document.getElementByName("patient-age")[0].value;
+                  var weightInput=document.getElementByName("patient-weight")[0].value;
+                  var serumInput=document.getElementByName("patient-serum")[0].value;
+                  var result;
+                  console.log('sexInput',sexInput)
+                  if (sexInput =='m')
+                  {
+                      if(ageInput<=120)
+                      {
+                        if(weightInput<=120)
+                        {
+                          if (serumInput<=120)
+                          {
+                           result=Math.round(((140-ageInput)+weightInput*1.23) / serumInput);
+                           }
+                           else
+                           {
+                            return alert("Your Input needs to be less than or equal to 120, please re-enter the number")
+                            }
+                        }
+                        else
+                          {
+                            return.alert("Your Input needs to be less than or equal to 120, please re-enter the number")
+                          }
+                      }
+                      else
+                          {
+                            return.alert("Your Input needs to be less than or equal to 120, please re-enter the number")
+                          }
+                  }
+
+                  if (sexInput =='f')
+                  {
+                      if(ageInput<=120)
+                      {
+                        if(weightInput<=120)
+                        {
+                          if (serumInput<=120)
+                          {
+                           result=Math.round(((140-ageInput)+weightInput*1.04) / serumInput);
+                           }
+                           else
+                           {
+                            return alert("Your Input needs to be less than or equal to 120, please re-enter the number")
+                            }
+                        }
+                        else
+                          {
+                            return.alert("Your Input needs to be less than or equal to 120, please re-enter the number")
+                          }
+                      }
+                      else
+                          {
+                            return.alert("Your Input needs to be less than or equal to 120, please re-enter the number")
+                          }
+                  }
+
+                  return alert(result+ "ml/min - Creatine clearance, original Cockcroft-Gault");
+              }
+
           <!-- About popup -->
           <div id="about-box">
             <div class="card">
