@@ -33,6 +33,10 @@
     z-index:9999;
 }
 
+#ctc-results {
+    display:none;
+}
+
 #about-box{
     position:absolute;
     top:2%;

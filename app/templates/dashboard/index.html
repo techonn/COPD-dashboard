@@ -26,6 +26,7 @@
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   <script src="{{ url_for('static', filename='js/barchart.js') }}"></script>
   <script src="{{ url_for('static', filename='js/popup.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/ctc_calc.js') }}"></script>
 
   <!-- Page script -->
   <script type=text/javascript>
@@ -306,19 +307,25 @@
                       <input type="radio" name="sex" value="f"> Female
                     </label>
                     <p>Age of patient (years):</p>
-                    <input type="number" min="1" max="120" name="patients-age" />
+                    <input type="number" min="1" max="120" name="patients-age" id="patients-age" />
                     <br /><br />
                     <p>Weight of patient (kg):</p>
-                    <input type="number" min="1" max="120" name="patients-weight" />
+                    <input type="number" min="1" max="120" name="patients-weight" id="patients-weight" />
                     <br /><br />
                     <p>Serum creatinine (micromol/L):</p>
-                    <input type="number" min="1" max="120" name="patients-serum" />
+                    <input type="number" min="1" max="120" name="patients-serum" id="patients-serum"/>
                     <br />
                   </div>
                   <br />
                   <hr />
-                  <button type="button" class="btn btn-primary">Calculate</button>
+                  <button type="button" class="btn btn-primary" onclick="calculateCTc();">Calculate</button>
                   <button type="button" class="btn btn-danger" onclick="popup.hideCeatCalcFormPopup();">Close</button>
+                    <br /><br />
+                    <div id="ctc-results">
+                        <h2>Results</h2>
+                        <p>Creatinine Clearance (Cockcroft-Gault Equation): <span id="ctc"></span>mL/min.</p>
+                        <br />
+                    </div>
                 </div>
               </div>
           </div>
