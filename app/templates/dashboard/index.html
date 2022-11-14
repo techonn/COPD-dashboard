@@ -332,13 +332,14 @@
                     <input type="number" min="1" max="120" name="patients-serum" id="patients-serum"/>
                     <br />
                   </div>
-                  <br />
+                  <br />*when sex is unselected, male is selected
+                    <br>*when number not included, Not A Number will show
                   <hr />
                   <button type="button" class="btn btn-primary" onclick="calculateCTc();" id="ctc-button">Calculate</button>
                   <button type="button" class="btn btn-danger" onclick="popup.hideCeatCalcFormPopup();">Close</button>
                     <br /><br />
                     <div id="ctc-results">
-                        <h2>Results</h2>
+                        <p>Results</p>
                         <p>Creatinine Clearance (Cockcroft-Gault Equation): <span id="ctc"></span> mL/min.</p>
                         <br />
                     </div>
