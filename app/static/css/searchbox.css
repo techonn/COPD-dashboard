@@ -1,0 +1,10 @@
+
+#table-scroll {
+  height:500px;
+  overflow:auto;
+  margin-top:20px;
+}
+
+#table-scroll thead th {
+  position:absolute;
+}

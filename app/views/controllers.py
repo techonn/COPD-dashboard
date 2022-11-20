@@ -22,13 +22,14 @@ db_mod = Database()
 def home():
     """Render the home page of the dashboard passing in data to populate dashboard."""
     pcts = [r[0] for r in db_mod.get_distinct_pcts()]
+    bnfcode = [r[0] for r in db_mod.get_distinct_bnf_code()]
     if request.method == 'POST':
-        # if selecting PCT for table, update based on user choice
+        # if selecting BNF code for table, update based on user choice
         form = request.form
-        selected_pct_data = db_mod.get_n_data_for_PCT(str(form['pct-option']), 5)
+        selected_bnf_data = db_mod.get_n_data_for_bnf_code(str(form['BNF_code']), 10000000)
     else:
-        # pick a default PCT to show
-        selected_pct_data = db_mod.get_n_data_for_PCT(str(pcts[0]), 5)
+        # pick a default BNF code to show
+        selected_bnf_data = db_mod.get_n_data_for_bnf_code(str(bnfcode[0]), 10000000)
 
     # prepare data
     bar_data = generate_barchart_data()
@@ -43,7 +44,7 @@ def home():
     # render the HTML page passing in relevant data
     return render_template('dashboard/index.html', tile_data=title_data_items,
                            pct={'data': bar_values, 'labels': bar_labels},
-                           pct_list=pcts, pct_data=selected_pct_data,
+                           pct_list=pcts, bnf_data=selected_bnf_data,
                            Infection_name=Infection_name, Infection_percentage=Infection_percentage,
                            mkd_text=mkd_text)
 

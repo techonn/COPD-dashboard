@@ -18,6 +18,7 @@
   <!-- Custom styles for this template-->
   <link href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/abx.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/searchbox.css') }}" rel="stylesheet">
 
   <!-- Chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js" integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -275,32 +276,53 @@
                 </div>
                 <div class="card-body">
                     <form method='POST' action="{{ url_for('dashboard.home') }}">
-                      <select class="custom-select" id="input-group-select" name="pct-option">
-                        {% for item in pct_list %}
-                        <option name="option-list" value="{{ item }}">{{ item }}</option>
-                        {% endfor %}
-                      </select>
-                      <input type="submit" value="Update" class="btn btn-outline-secondary" />
+                      <label>&nbsp;&nbsp;&nbsp;Enter BNF Code:</label>&nbsp;
+                      <input id="BNF_code" name="BNF_code" type="text" placeholder="Search..." onkeyup="filter()">&nbsp;&nbsp;
+                      <input type="submit" value="Update" id="search" class="btn btn-outline-secondary">
                     </form>
                     <hr />
-                    <table class="table">
-                    <thead>
-                      <td>Practice</td>
-                      <td>BNF code</td>
-                      <td>BNF name</td>
-                      <td>Items</td>
-                    </thead>
-                      <tbody>
-                      {% for row in pct_data %}
-                        <tr>
-                          <td>{{ row.practice }}</td>
-                          <td>{{ row.BNF_code }}</td>
-                          <td>{{ row.BNF_name }}</td>
-                          <td>{{ row.items }}</td>
-                        </tr>
-                      {% endfor %}
-                      </tbody>
-                    </table>
+                <div>
+                    <div id="table-scroll">
+                        <table class="table" id="bnftable">
+                          <thead>
+                            <th>BNF name</th>
+                            <th>Practice</th>
+                            <th>Items</th>
+                            <th>ACT cost</th>
+                          </thead>
+                          <tbody>
+                          {% for row in bnf_data %}
+                            <tr>
+                              <td>{{ row.BNF_name }}</td>
+                              <td>{{ row.practice }}</td>
+                              <td>{{ row.items }}</td>
+                              <td>{{ row.ACT_cost }}</td>
+                            </tr>
+                          {% endfor %}
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                    <script>
+                        function filter() {
+                            var input, filter, table, tr, td, i, txtValue;
+                            input = document.getElementById("BNF_code");
+                            filter = input.value.toUpperCase();
+                            table = document.getElementById("bnftable");
+                            tr = table.getElementsByTagName("tr");
+                            for (i = 1; i < tr.length; i++) {
+                                td = tr[i].getElementsByTagName("td")[0];
+                                if (td) {
+                                    txtValue = td.textContent || td.innerText;
+                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                        tr[i].style.display = "";
+                                    }   else {
+                                        tr[i].style.display = "none";
+                                    }
+                                }
+                            }
+                        }           
+                    </script>
                   </div>
                 </div>
               </div>

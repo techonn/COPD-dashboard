@@ -30,9 +30,17 @@ class Database:
         """Return the distinct PCT codes."""
         return db.session.query(PrescribingData.PCT).distinct().all()
 
+    def get_distinct_bnf_code(self):
+        """Return the distinct BNF codes."""
+        return db.session.query(PrescribingData.BNF_code).distinct().all()
+
     def get_n_data_for_PCT(self, pct, n):
         """Return all the data for a given PCT."""
         return db.session.query(PrescribingData).filter(PrescribingData.PCT == pct).limit(n).all()
+
+    def get_n_data_for_bnf_code(self, bnf, n):
+        """Return all the data for a given BNF code."""
+        return db.session.query(PrescribingData).filter(PrescribingData.BNF_code.contains(bnf)).limit(n).all()
     
     def get_average_ACT(self):
         """Return Average ACT cost """
