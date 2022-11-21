@@ -283,7 +283,7 @@
                     <hr />
                 <div>
                     <div id="table-scroll">
-                        <table class="table" id="bnftable">
+                        <table class="table" id="table">
                           <thead>
                             <th>BNF name</th>
                             <th>Practice</th>
@@ -308,7 +308,7 @@
                             var input, filter, table, tr, td, i, txtValue;
                             input = document.getElementById("BNF_code");
                             filter = input.value.toUpperCase();
-                            table = document.getElementById("bnftable");
+                            table = document.getElementById("table");
                             tr = table.getElementsByTagName("tr");
                             for (i = 1; i < tr.length; i++) {
                                 td = tr[i].getElementsByTagName("td")[0];
