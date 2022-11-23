@@ -38,9 +38,9 @@ class Database:
         """Return all the data for a given PCT."""
         return db.session.query(PrescribingData).filter(PrescribingData.PCT == pct).limit(n).all()
 
-    def get_n_data_for_bnf_code(self, bnf, n):
+    def get_n_data_for_bnf_code(self):
         """Return all the data for a given BNF code."""
-        return db.session.query(PrescribingData).filter(PrescribingData.BNF_code.contains(bnf)).limit(n).all()
+        return db.session.query(PrescribingData.BNF_code.label("BNF_code"), PrescribingData.BNF_name.label("BNF_name"), func.count(PrescribingData.practice).label("Total_Prescribing_Practices"), func.sum(PrescribingData.items).label("items"), (func.sum(PrescribingData.ACT_cost * PrescribingData.items)/func.sum(PrescribingData.items)).label("ACT_cost")).group_by(PrescribingData.BNF_code).all()
     
     def get_average_ACT(self):
         """Return Average ACT cost """
