@@ -26,9 +26,20 @@ class Database:
         """Return the total items per PCT."""
         return db.session.query(func.sum(PrescribingData.items).label('item_sum')).group_by(PrescribingData.PCT).all()
 
+    def get_total_prescribed_antibiotics_per_GP(self, pct):
+        """Return the total items per GP."""
+        return db.session.query(PrescribingData.practice, func.sum(PrescribingData.items).label('GP_item_sum')).filter(PrescribingData.PCT == pct, func.substr(PrescribingData.BNF_code,1,4) == "0501").group_by(PrescribingData.practice).all()
+
+    def get_practice_code_name(self):
+        return db.session.query(PracticeData.practice_code, PracticeData.practice_name).all()
+
     def get_distinct_pcts(self):
         """Return the distinct PCT codes."""
         return db.session.query(PrescribingData.PCT).distinct().all()
+
+    def get_distinct_practice(self):
+        """Return the distinct GP codes."""
+        return db.session.query(PrescribingData.practice).distinct().all()
 
     def get_distinct_bnf_code(self):
         """Return the distinct BNF codes."""

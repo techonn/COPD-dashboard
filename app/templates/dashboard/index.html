@@ -39,6 +39,15 @@
             barChart.drawChart({{pct|tojson}}, "bar-chart");
         });
   </script>
+  <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
+
+        // Run JavaScript functions when page ready
+        $(document).ready(function () {
+            initializeMain();
+            barChart.drawChart({{gp_bar|tojson}}, "gp-bar-chart");
+        });
+  </script>
 </head>
 
 <body id="page-top">
@@ -231,6 +240,18 @@
                 </div>
                 <div class="card-body">
                   <canvas id="bar-chart"></canvas>
+                </div>
+              </div>
+            </div>
+
+          <div class="row">
+            <div class="col-xl-12 col-lg-7">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Total number of prescribed antibiotics per GP practice</h6>
+                </div>
+                <div class="card-body">
+                  <canvas id="gp-bar-chart" width="2300" height="800" style="display: block; box-sizing: border-box; height: 400px; width: 1150px;"></canvas>
                 </div>
               </div>
             </div>
