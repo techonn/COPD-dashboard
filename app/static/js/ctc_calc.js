@@ -1,4 +1,5 @@
 function calculateCTc() {
+    alert("command R")
     var ctc;
     var sex = document.getElementsByName("sex");
     var patients_age = parseFloat(document.getElementById("patients-age").value);

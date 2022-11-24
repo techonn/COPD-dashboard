@@ -30,12 +30,23 @@ def home():
         # pick a default PCT to show
         selected_pct_data = db_mod.get_n_data_for_PCT(str(pcts[0]), 5)
 
+    bnfs = [r[0] for r in db_mod.get_distinct_bnf()]
+    if request.method == 'POST':
+        # if selecting BNF code/name for table, update based on user choice
+        form = request.form
+        selected_bnf_data = db_mod.get_n_data_for_BNF(str(form['bnf-option']), 30)
+    else:
+        # pick a default BNF to show
+        selected_bnf_data = db_mod.get_n_data_for_BNF(str(bnfs[0]), 30)
+
     # prepare data
     bar_data = generate_barchart_data()
     bar_values = bar_data[0]
     bar_labels = bar_data[1]
     title_data_items = generate_data_for_tiles()
     mkd_text= generate_about_data()
+
+    # prepare data for infection bar chart
     Infection = generate_data_for_infection()
     Infection_name = [x for x,y in Infection]
     Infection_percentage = ["{:.2f}".format(y*100) for x,y in Infection]
@@ -44,8 +55,12 @@ def home():
     return render_template('dashboard/index.html', tile_data=title_data_items,
                            pct={'data': bar_values, 'labels': bar_labels},
                            pct_list=pcts, pct_data=selected_pct_data,
+                           # rendering HTML page for infection bar chart
                            Infection_name=Infection_name, Infection_percentage=Infection_percentage,
-                           mkd_text=mkd_text)
+                           mkd_text=mkd_text,
+                           #rendering HTML page for BNF table
+                           bnf_list=bnfs, bnf_data=selected_bnf_data
+                           )
 
 def generate_data_for_tiles(pct=None, n=None):
     """Generate the data for the four home page titles."""

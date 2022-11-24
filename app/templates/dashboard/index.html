@@ -27,6 +27,7 @@
   <script src="{{ url_for('static', filename='js/barchart.js') }}"></script>
   <script src="{{ url_for('static', filename='js/popup.js') }}"></script>
   <script src="{{ url_for('static', filename='js/ctc_calc.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bnfcode_name_table.js') }}"></script>
 
   <!-- Page script -->
   <script type=text/javascript>
@@ -262,32 +263,32 @@
 
                           </div>
                       </div>
-
                   </div>
                 </div>
                </div>
             </div>
             <div class="col-xl-6">
-              <!-- Show the BNF data for slected PCT -->
+
+              <!-- Show the BNF data for selected PCT -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">BNF data per PCT</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">BNF data</h6>
                 </div>
                 <div class="card-body">
                     <form method='POST' action="{{ url_for('dashboard.home') }}">
-                      <select class="custom-select" id="input-group-select" name="pct-option">
+                        <label>Enter PCT:</label> <select class="custom-select" id="input-group-select" name="pct-option">
                         {% for item in pct_list %}
                         <option name="option-list" value="{{ item }}">{{ item }}</option>
                         {% endfor %}
                       </select>
-                      <input type="submit" value="Update" class="btn btn-outline-secondary" />
+                      <input type="submit" value="Search" class="btn btn-outline-secondary" />
                     </form>
                     <hr />
                     <table class="table">
                     <thead>
                       <td>Practice</td>
-                      <td>BNF code</td>
-                      <td>BNF name</td>
+                      <td>BNF Code</td>
+                      <td>BNF Name</td>
                       <td>Items</td>
                     </thead>
                       <tbody>
@@ -297,6 +298,41 @@
                           <td>{{ row.BNF_code }}</td>
                           <td>{{ row.BNF_name }}</td>
                           <td>{{ row.items }}</td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+              <!-- Show the BNF Code and Name data table -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">BNF data</h6>
+                </div>
+                <div class="card-body">
+                    <form method='POST' action="{{ url_for('dashboard.home') }}">
+                        <input type="text" id="myInput" onkeyup="BNFSearch()" placeholder="Search for BNF Code/Name..">
+
+                    </form>
+                    <hr />
+                    <table class="table">
+                    <thead>
+                      <td>BNF name</td>
+                      <td>Practices Prescribing Drug</td>
+                      <td>Total Items Prescribed</td>
+                      <td>Average Cost</td>
+                    </thead>
+                      <tbody>
+                      {% for row in bnf_data %}
+                        <tr>
+                          <td>{{ row.BNF_name }}</td>
+                          <td>{{ row.BNF_total_practice }}</td>
+                          <td>{{ row.BNF_total_item }}</td>
+                            <td>{{ row.BNF_average_cost }}</td>
                         </tr>
                       {% endfor %}
                       </tbody>
