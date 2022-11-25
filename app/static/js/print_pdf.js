@@ -20,13 +20,32 @@ function print_summary_as_pdf() {
     barchart.innerHTML = "<div class='col-xl-12 col-lg-7'><div class='card shadow mb-4'>" + barheader.outerHTML + imageElement.outerHTML + "</div></div></div>";
     barchart.classList.add('row');
     barchart.style.margin = "auto";
-    barchart.classList.add('pagebreak');
+
+    var chartCanvasGP = document.getElementById("gp-bar-chart");
+    while (chartCanvasGP == null || chartCanvasGP.style.length < 1) {
+        true==true;
+      }
+    var GPimageElement = document.createElement("img");
+    GPimageElement.style = "width: 100%;";
+    GPimageElement.src = chartCanvasGP.toDataURL("image/png", 0);
+
+    var GPbarheader= document.getElementById("GPbarheader").cloneNode(true);
+
+    var GPbarchart= document.createElement('div');
+    GPbarchart.innerHTML = "<div class='col-xl-12 col-lg-7'><div class='card shadow mb-4'>" + GPbarheader.outerHTML + GPimageElement.outerHTML + "</div></div></div>";
+    GPbarchart.classList.add('row');
+    GPbarchart.style.margin = "auto";
+    GPbarchart.classList.add('pagebreak');
 
     var infectiondrug= document.getElementById("infectiondrug").cloneNode(true);
     infectiondrug.style.margin = "auto";
-    infectiondrug.classList.add('pagebreak');
-    var BNFtable= document.getElementById("BNForitable").cloneNode(true);
-    BNFtable.style.margin = "auto";
+
+    var BNForitable= document.getElementById("BNForitable").cloneNode(true);
+    BNForitable.style.margin = "auto";
+    BNForitable.classList.add('pagebreak');
+
+    var BNFaddtable= document.getElementById("BNFaddtable").cloneNode(true);
+    BNFaddtable.style.margin = "auto";
 
     //add element to print
 
@@ -40,9 +59,11 @@ function print_summary_as_pdf() {
     container.appendChild(pageheader);
     container.appendChild(flashcards);
     container.appendChild(barchart);
+    container.appendChild(GPbarchart);
     //container.appendChild(barcanvas);
     container.appendChild(infectiondrug);
-    container.appendChild(BNFtable);
+    container.appendChild(BNForitable);
+    container.appendChild(BNFaddtable);
 
     html2pdf(container,{
         margin: [15,10,15,10],
