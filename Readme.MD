@@ -61,16 +61,52 @@ All the features displayed on the dashboard:
 * A creatinine clearance calculator acting as a clinical support tool for physicians
 * Details about the purpose of the dashboard
 * Percentage of infection treatment drug out of all infection treatments 
+* A search box that filters the drug by name or BNF code and displays it in the form of a table.
+* A bar chart visualizing the total number of prescribed antibiotics for each GP practice in a selected PCT.
+
+### Additional Information
+
+* Creatinine clearance calculator considerations:- <br/>
+  1) Cockcroft-Gault Formula- <br/>
+     CrCl,mL/min = (140 - age)*(weight,kg)*(0.85 if female)/(72 * Cr, mg/dL) <br/>
+  2) Age- 12 to 70 years. <br/>
+  3) Body weight formula's-
+  * Adjusted body weight (ABW), kg = IBW, kg + 0.4 × (actual body weight, kg – IBW, kg)
+  * Ideal body weight (IBW), kg (male) = 50 + [ 2.3 × (height, inches – 60)]
+  * IBW, kg (female) = 45.5 + [ 2.3 × (height, inches – 60)] <br/>
+  4) Body weight ranges-
+  * Body Mass Index (BMI) <18.5 - Underweight
+  * BMI 18.5-24.9 - Normal weight
+  * BMI >= 25 - Overweight/Obese
 
 ### Data Used
 
-The data that drives the data dashboard is the practice level prescribing data provided by NHS Digital.
+The data that drives the data dashboard is the practice level prescribing data provided by NHS Digital- [NHS Digital Practice level prescribing data: more information.](https://digital.nhs.uk/data-and-information/areas-of-interest/prescribing/practice-level-prescribing-in-england-a-summary/practice-level-prescribing-data-more-information)
 
-https://digital.nhs.uk/data-and-information/areas-of-interest/prescribing/practice-level-prescribing-in-england-a-summary/practice-level-prescribing-data-more-information
+The BNF codes for the required classes of drugs:-<br/>
+1) Antibacterial drugs - [Openprescribing.net.BNF 5.1: Antibacterial Drugs | OpenPrescribing.](https://openprescribing.net/bnf/0501/)<br/>
+2) Antifungal drugs    - [Openprescribing.net.BNF 5.2: Antifungal drugs | OpenPrescribing.](https://openprescribing.net/bnf/0502/)<br/>
+3) Antiviral drugs     - [Openprescribing.net.BNF 5.3: Antiviral drugs | OpenPrescribing.](https://openprescribing.net/bnf/0503/)<br/>
+4) Antiprotozoal drugs - [Openprescribing.net.BNF 5.4: Antiprotozoal drugs | OpenPrescribing.](https://openprescribing.net/bnf/0504/)<br/>
+5) Antihelmentic drugs - [Openprescribing.net.BNF 5.5: Anthelmintics | OpenPrescribing.](https://openprescribing.net/bnf/0505/)<br/>
+
+The Glossary of terms  - [NHS Digital Practice level prescribing - glossary of terms.](https://digital.nhs.uk/data-and-information/areas-of-interest/prescribing/practice-level-prescribing-in-england-a-summary/practice-level-prescribing-glossary-of-terms#bnf-code-structure)
+
+Reference resource -
+Creatinine calculator - <br/>
+1) The formula - [Cockcroft, D.W. and Gault, H. (1976). Prediction of Creatinine Clearance from Serum Creatinine. Nephron, 16(1), pp.31–41.](https://doi.org/10.1159/000180580)<br/>
+2) Age range - <br/> a.[ Willems, J.M., Vlasveld, T., den Elzen, W.P., Westendorp, R.G., Rabelink, T.J., de Craen, A.J. and Blauw, G.J. (2013). Performance of Cockcroft-Gault, MDRD, and CKD-EPI in estimating prevalence of renal function and predicting survival in the oldest old. BMC Geriatrics, 13(1).](https://doi.org/10.1186/1471-2318-13-113)<br/> 
+                     b. [Pierrat, A., Gravier, E., Saunders, C., Caira, M.-V., Aït-Djafer, Z., Legras, B. and Mallié, J.-P. (2003). Predicting GFR in children and adults: A comparison of the Cockcroft-Gault, Schwartz, and Modification of Diet in Renal Disease formulas. Kidney International, 64(4), pp.1425–1436.](https://doi.org/10.1046/j.1523-1755.2003.00208.x)<br/>
+3) Body weight formula- [McCarron, M.M. and Devine, B.J. (1974). Clinical Pharmacy: Case Studies. Drug Intelligence & Clinical Pharmacy, 8(11), pp.650–655.](https://doi.org/10.1177/106002807400801104)<br/>
+4) Body weight ranges - <br/>
+  a. [Winter, M.A.,Guhr, K.N. and Berg, G.M. (2012). Impact of Various Body Weights and Serum Creatinine Concentrations on the Bias and Accuracy of the Cockcroft-Gault Equation. Pharmacotherapy: The Journal of Human Pharmacology and Drug Therapy, 32(7), pp.604–612.]( https://doi.org/10.1002/j.1875-9114.2012.01098.x)<br/>
+  b. [Brown, D.L.,Masselink, A.J. and Lalla, C.D. (2013). Functional Range of Creatinine Clearance for Renal Drug Dosing: A Practical Solution to the Controversy of Which Weight to Use in the Cockcroft-Gault Equation. Annals of Pharmacotherapy, 47(7-8), pp.1039–1044. doi:10.1345/aph.1s176.](https://doi.org/10.1345/aph.1S176)
+
+Additional resources - </br>
+1) BNF Online-[MedicinesComplete Digital Medicines Information Suite.](https://www.medicinescomplete.com/#/)<br/>
+2) Practice level prescribing dataset used in the dashboard -[NHS Digital Practice Level Prescribing December 2019.](https://digital.nhs.uk/data-and-information/publications/statistical/practice-level-prescribing-data/december-2019)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
