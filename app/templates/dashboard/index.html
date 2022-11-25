@@ -337,30 +337,32 @@
                 <p>Sex of patient:</p>
                 <div>
                   <label class="radio-inline">
-                    <input type="radio" id="sexm" name="sex" value="m"> Male
+                    <input type="radio" id="sexm" name="sex" value="m" onclick="modcal();" required> Male
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" id="sexf" name="sex" value="f"> Female
+                    <input type="radio" id="sexf" name="sex" value="f" onclick="modcal();"> Female
                   </label>
                   <p>Age of patient (years):</p>
-                  <input type="number" min="1" max="120" name="patients-age" id="patients-age" />
+                  <input type="number" min="1" max="100" name="patients-age" id="patients-age" onclick="modcal();" required/>
                   <br /><br />
                   <p>Weight of patient (kg):</p>
-                  <input type="number" min="1" max="120" name="patients-weight" id="patients-weight" />
+                  <input type="number" min="20" max="120" name="patients-weight" id="patients-weight" onclick="modcal();" required/>
+                  <br /><br />
+                  <p>Height of patient (cm):</p>
+                  <input type="number" min="50" max="200" name="patients-weight" id="patients-height" onclick="modcal();"/>
                   <br /><br />
                   <p>Serum creatinine (micromol/L):</p>
-                  <input type="number" min="1" max="120" name="patients-serum" id="patients-serum"/>
+                  <input type="number" min="30" max="500" name="patients-serum" id="patients-serum" onclick="modcal();" required/>
                   <br />
                 </div>
-                <br />*when sex is unselected, male is selected
-                  <br>*when number not included, Not A Number will show
                 <hr />
                 <button type="button" class="btn btn-primary" onclick="calculateCTc();" id="ctc-button">Calculate</button>
                 <button type="button" class="btn btn-danger" onclick="popup.hideCeatCalcFormPopup();">Close</button>
+                <a class="btn" onclick="clrcal();"><i class="fas fa-undo"></i></a>
                   <br /><br />
                     <div id="ctc-results">
-                      <p>Results</p>
-                      <p>Creatinine Clearance (Cockcroft-Gault Equation): <span id="ctc"></span> mL/min.</p>
+                      <p><h2>Results</h2></p>
+                      <p><span id="warning"></span><br/><span id="ctc"></span></p>
                       <br />
                     </div>
               </div>

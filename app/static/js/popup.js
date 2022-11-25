@@ -41,6 +41,7 @@ function Popup()
     {
         this.hideMask();
         this.entryFormPopup.style.display = "none";
+        clrcal();
     }
 
     // show the about popup
