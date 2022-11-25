@@ -23,29 +23,48 @@ def home():
     """Render the home page of the dashboard passing in data to populate dashboard."""
     pcts = [r[0] for r in db_mod.get_distinct_pcts()]
     if request.method == 'POST':
-        # if selecting PCT for table, update based on user choice
+        # if selecting BNF code for table, update based on user choice
         form = request.form
         selected_pct_data = db_mod.get_n_data_for_PCT(str(form['pct-option']), 5)
+        GP_bar_data = generate_GP_barchart_data(str(form['pct-option']))
+        pcts.remove(str(form['pct-option']))
+        pcts = [str(form['pct-option'])] + pcts
     else:
-        # pick a default PCT to show
+        # pick a default BNF code to show
         selected_pct_data = db_mod.get_n_data_for_PCT(str(pcts[0]), 5)
+        GP_bar_data = generate_GP_barchart_data(str(pcts[0]))
+        
+    selected_bnf_data = db_mod.get_n_data_for_BNF()
+    bnfs = [r for r, s, *t in selected_bnf_data]
 
     # prepare data
     bar_data = generate_barchart_data()
+    GP_bar_values = GP_bar_data[0]
+    GP_bar_labels = GP_bar_data[1]
     bar_values = bar_data[0]
     bar_labels = bar_data[1]
     title_data_items = generate_data_for_tiles()
     mkd_text= generate_about_data()
+
+    # prepare data for infection bar chart
     Infection = generate_data_for_infection()
     Infection_name = [x for x,y in Infection]
     Infection_percentage = ["{:.2f}".format(y*100) for x,y in Infection]
+    GP_bar_values = GP_bar_data[0]
+    GP_bar_labels = GP_bar_data[1]
 
     # render the HTML page passing in relevant data
     return render_template('dashboard/index.html', tile_data=title_data_items,
                            pct={'data': bar_values, 'labels': bar_labels},
                            pct_list=pcts, pct_data=selected_pct_data,
+                           # rendering HTML page for infection bar chart
                            Infection_name=Infection_name, Infection_percentage=Infection_percentage,
-                           mkd_text=mkd_text)
+                           mkd_text=mkd_text,
+                           #rendering HTML page for BNF table
+                           bnf_list=bnfs, bnf_data=selected_bnf_data,
+                           #rendering HTML page for GP table
+                           gp_bar={'data': GP_bar_values, 'labels': GP_bar_labels}
+                           )
 
 def generate_data_for_tiles(pct=None, n=None):
     """Generate the data for the four home page titles."""
@@ -62,6 +81,17 @@ def generate_barchart_data():
     data_values = [r[0] for r in data_values]
     pct_codes = [r[0] for r in pct_codes]
     return [data_values, pct_codes]
+
+def generate_GP_barchart_data(pct):
+    """Generate the data needed to populate the barchart."""
+    data_value = db_mod.get_total_prescribed_antibiotics_per_GP(pct)
+    practice_code_name = db_mod.get_practice_code_name()
+
+    # convert into lists and return
+    practice_dict = {practicecode: practicename for practicecode,practicename in practice_code_name }
+    data = [itemsum for practice_code,itemsum in data_value]
+    label = [practice_dict[practice_code] for practice_code,itemsum in data_value]
+    return [data, label]
 
 def generate_about_data():
     """Read Readme.md for about data"""

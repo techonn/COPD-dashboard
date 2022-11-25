@@ -29,6 +29,7 @@ function BarChart()
           },
           options: {
             maintainAspectRatio: false,
+            responsive: true,
             layout: {
               padding: {
                 left: 10,

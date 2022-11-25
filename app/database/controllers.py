@@ -26,14 +26,33 @@ class Database:
         """Return the total items per PCT."""
         return db.session.query(func.sum(PrescribingData.items).label('item_sum')).group_by(PrescribingData.PCT).all()
 
+    def get_total_prescribed_antibiotics_per_GP(self, pct):
+        """Return the total items per GP."""
+        return db.session.query(PrescribingData.practice, func.sum(PrescribingData.items).label('GP_item_sum')).filter(PrescribingData.PCT == pct, func.substr(PrescribingData.BNF_code,1,4) == "0501").group_by(PrescribingData.practice).all()
+
+    def get_practice_code_name(self):
+        return db.session.query(PracticeData.practice_code, PracticeData.practice_name).all()
+
     def get_distinct_pcts(self):
         """Return the distinct PCT codes."""
         return db.session.query(PrescribingData.PCT).distinct().all()
 
+    def get_distinct_bnf(self):
+        """Return the distinct BNF codes/name."""
+        return db.session.query(PrescribingData.BNF_code, PrescribingData.BNF_name).distinct().all()
+
     def get_n_data_for_PCT(self, pct, n):
         """Return all the data for a given PCT."""
         return db.session.query(PrescribingData).filter(PrescribingData.PCT == pct).limit(n).all()
-    
+
+    def get_n_data_for_BNF(self):
+        """Return all the data for a given BNF Code/Name."""
+        return db.session.query(PrescribingData.BNF_code.label("BNF_code"),
+                                PrescribingData.BNF_name.label("BNF_name"),
+                                func.count(PrescribingData.practice).label("BNF_total_practice"),
+                                func.sum(PrescribingData.items).label("BNF_total_item"),
+                                (func.sum(PrescribingData.ACT_cost * PrescribingData.items) / func.sum(PrescribingData.items)).label("BNF_average_cost")).group_by(PrescribingData.BNF_code).all()
+
     def get_average_ACT(self):
         """Return Average ACT cost """
         return db.session.query(func.avg(PrescribingData.ACT_cost)).first()[0]

@@ -26,8 +26,8 @@ class PrescribingData(db.Model):
 class PracticeData(db.Model):
     """Class for the practice address data table."""
     __tablename__ = 'practices'
-    practice_code = db.Column(db.String(6), primary_key=True)
-    practice_name = db.Column(db.Text)
+    practice_code = db.Column("CODE", db.String(6), primary_key=True)
+    practice_name = db.Column("PRACTICE", db.Text)
     address_line_1 = db.Column(db.Text)
     address_line_2 = db.Column(db.Text)
     city = db.Column(db.Text)
