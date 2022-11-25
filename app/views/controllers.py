@@ -23,18 +23,19 @@ def home():
     """Render the home page of the dashboard passing in data to populate dashboard."""
     pcts = [r[0] for r in db_mod.get_distinct_pcts()]
     if request.method == 'POST':
-        # if selecting PCT for table, update based on user choice
+        # if selecting BNF code for table, update based on user choice
         form = request.form
         selected_pct_data = db_mod.get_n_data_for_PCT(str(form['pct-option']), 5)
         GP_bar_data = generate_GP_barchart_data(str(form['pct-option']))
         pcts.remove(str(form['pct-option']))
         pcts = [str(form['pct-option'])] + pcts
     else:
-        # pick a default PCT to show
+        # pick a default BNF code to show
         selected_pct_data = db_mod.get_n_data_for_PCT(str(pcts[0]), 5)
         GP_bar_data = generate_GP_barchart_data(str(pcts[0]))
-    bnfs = [r[0] for r in db_mod.get_distinct_bnf()]
-    selected_bnf_data = db_mod.get_n_data_for_BNF(str(bnfs[0]), 30)
+        
+    selected_bnf_data = db_mod.get_n_data_for_BNF()
+    bnfs = [r for r, s, *t in selected_bnf_data]
 
     # prepare data
     bar_data = generate_barchart_data()
@@ -49,6 +50,8 @@ def home():
     Infection = generate_data_for_infection()
     Infection_name = [x for x,y in Infection]
     Infection_percentage = ["{:.2f}".format(y*100) for x,y in Infection]
+    GP_bar_values = GP_bar_data[0]
+    GP_bar_labels = GP_bar_data[1]
 
     # render the HTML page passing in relevant data
     return render_template('dashboard/index.html', tile_data=title_data_items,

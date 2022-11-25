@@ -45,17 +45,13 @@ class Database:
         """Return all the data for a given PCT."""
         return db.session.query(PrescribingData).filter(PrescribingData.PCT == pct).limit(n).all()
 
-    def get_n_data_for_BNF(self, bnf, n):
+    def get_n_data_for_BNF(self):
         """Return all the data for a given BNF Code/Name."""
         return db.session.query(PrescribingData.BNF_code.label("BNF_code"),
                                 PrescribingData.BNF_name.label("BNF_name"),
                                 func.count(PrescribingData.practice).label("BNF_total_practice"),
                                 func.sum(PrescribingData.items).label("BNF_total_item"),
                                 (func.sum(PrescribingData.ACT_cost * PrescribingData.items) / func.sum(PrescribingData.items)).label("BNF_average_cost")).group_by(PrescribingData.BNF_code).all()
-
-        #return db.session.query(PrescribingData).filter(func.count(PrescribingData.practice).label("BNF_total_practice"))
-        #return db.session.query(PrescribingData).filter(func.sum(PrescribingData.items).label("BNF_total_item"))
-        #return db.session.query(PrescribingData).filter(func.sum(PrescribingData.ACT_cost * PrescribingData.items)/func.sum(PrescribingData.items).label("BNF_average_cost"))
 
     def get_average_ACT(self):
         """Return Average ACT cost """

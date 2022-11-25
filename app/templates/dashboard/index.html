@@ -18,7 +18,7 @@
   <!-- Custom styles for this template-->
   <link href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/abx.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/bnfcode_name_table.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/bnfcode_name_table.css') }}" rel="stylesheet">
 
   <!-- Chart.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.1/chart.min.js" integrity="sha512-5vwN8yor2fFT9pgPS9p9R7AszYaNn0LkQElTXIsZFCL7ucT8zDCAqlQXDdaqgA1mZP47hdvztBMsIoFxq/FyyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -28,7 +28,7 @@
   <script src="{{ url_for('static', filename='js/barchart.js') }}"></script>
   <script src="{{ url_for('static', filename='js/popup.js') }}"></script>
   <script src="{{ url_for('static', filename='js/ctc_calc.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/bnfcode_name_table.js') }}"></script>
+  <!--<script src="{{ url_for('static', filename='js/bnfcode_name_table.js') }}"></script>-->
 
   <!-- Page script -->
   <script type=text/javascript>
@@ -253,58 +253,82 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Total number of prescribed antibiotics per GP practice</h6>
                 </div>
-                  <div class="card-body">
-                      <form method='POST' action="{{ url_for('dashboard.home') }}">
-                        <label>Enter PCT:</label> <select class="custom-select" id="input-group-select" name="pct-option">
+                <div class="card-body">
+                  <form method='POST' action="{{ url_for('dashboard.home') }}">
+                      <label>Enter PCT:</label>
+                      <select class="custom-select" id="input-group-select" name="pct-option">
                         {% for item in pct_list %}
                         <option name="option-list" value="{{ item }}">{{ item }}</option>
                         {% endfor %}
                       </select>
-                      <input type="submit" value="Search" class="btn btn-outline-secondary" />
-                    </form>
-                  </div>
+                    <input type="submit" value="Search" class="btn btn-outline-secondary" />
+                  </form>
+                </div>
                 <div class="card-body">
                   <canvas id="gp-bar-chart" width="2300" height="800" style="display: block; box-sizing: border-box; height: 400px; width: 1150px;"></canvas>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- Content Row -->
-            <div class = "row">
-                <div class="col-xl-12">
-                  <!-- Show the BNF Code and Name data table -->
-                  <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">Prescription details based on BNF code/name</h6>
-                    </div>
-                    <div class="card-body">
-                        <input type="text" id="myInput" onkeyup="BNFSearch()" placeholder="Search for BNF Code/Name..">
-                            <hr />
-                        <div id="table-scroll">
-                            <table class="table" id="table">
-                            <thead>
-                              <th>BNF Name</th>
-                              <th>Practices Prescribing Drug (practice)</th>
-                              <th>Total Items Prescribed (prescription items)</th>
-                              <th>Average Cost (£)</th>
-                            </thead>
-                              <tbody>
-                              {% for row in bnf_data %}
-                                <tr>
-                                  <td style="display:none;">{{ row.BNF_code }}</td>
-                                  <td>{{ row.BNF_name }}</td>
-                                  <td>{{ row.BNF_total_practice }}</td>
-                                  <td>{{ row.BNF_total_item }}</td>
-                                  <td>{{'%0.2f'|format(row.BNF_average_cost)|float}}</td>
-                                </tr>
-                              {% endfor %}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+          <!-- Content Row -->
+          <div class = "row">
+            <div class="col-xl-12">
+              <!-- Show the BNF Code and Name data table -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Prescription details based on BNF code/name</h6>
+                </div>
+                <div class="card-body">
+                  <input type="text" id="myInput" placeholder="Search for BNF Code/Name.." onkeyup="BNFSearch();"><hr />
+                  <div id="table-scroll">
+                    <table class="table" id="BNFtable">
+                      <thead>
+                        <th>BNF Name</th>
+                        <th>Practices Prescribing Drug (practice)</th>
+                        <th>Total Items Prescribed (prescription items)</th>
+                        <th>Average Cost (£)</th>
+                      </thead>
+                      <tbody>
+                        {% for row in bnf_data %}
+                          <tr>
+                            <td style="display:none;">{{ row.BNF_code }}</td>
+                            <td>{{ row.BNF_name }}</td>
+                            <td>{{ row.BNF_total_practice }}</td>
+                            <td>{{ row.BNF_total_item }}</td>
+                            <td>{{'%0.2f'|format(row.BNF_average_cost)|float}}</td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
+              </div>
             </div>
+          </div>
+          <script>
+            function BNFSearch() {
+              var input, filter, table, tr, td_code, td_name, i, txtValue;
+              input = document.getElementById("myInput");
+              filter = input.value.toUpperCase();
+              table = document.getElementById("BNFtable");
+              tr = table.getElementsByTagName("tr")
+          
+              // Loop through all table rows, and hide those who don't match the search query
+              for (i = 0; i < tr.length; i++) {
+                td_code = tr[i].getElementsByTagName("td")[0];
+                td_name = tr[i].getElementsByTagName("td")[1];
+                if (td_code||td_name) {
+                  txtValue = (td_code.textContent || td_code.innerText).concat(" ").concat(td_name.textContext||td_name.innerText);
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                  } else {
+                    tr[i].style.display = "none";
+                  }
+                }
+              }
+            }
+          </script>
 
           <!-- Content Row -->
           <div class="row last-row">
@@ -317,24 +341,24 @@
                 </div>
                 <div class="card-body">
                   <div class="container">
-                      <div class="row">
-                          <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-12">
 
-                            {% for i in range(0,(Infection_name|length)) %}
-                              <h6 class="progress-title">{{Infection_name[i]}}: {{Infection_percentage[i]}}%</h6>
-                              <div class="progress">
-                                  <div class="progress-bar" style="width:{{Infection_percentage[i]}}%; background:#FFA500;">
-                                      <div class="progress-value"></div>
-                                  </div>
-                              </div>
-                              <br/>
-                            {% endfor %}
-
+                        {% for i in range(0,(Infection_name|length)) %}
+                          <h6 class="progress-title">{{Infection_name[i]}}: {{Infection_percentage[i]}}%</h6>
+                          <div class="progress">
+                            <div class="progress-bar" style="width:{{Infection_percentage[i]}}%; background:#FFA500;">
+                              <div class="progress-value"></div>
+                            </div>
                           </div>
+                          <br/>
+                        {% endfor %}
+
                       </div>
+                    </div>
                   </div>
                 </div>
-               </div>
+              </div>
             </div>
 
             <div class="col-xl-6">
@@ -344,23 +368,24 @@
                   <h6 class="m-0 font-weight-bold text-primary">BNF data per PCT</h6>
                 </div>
                 <div class="card-body">
-                    <form method='POST' action="{{ url_for('dashboard.home') }}">
-                        <label>Enter PCT:</label> <select class="custom-select" id="input-group-select" name="pct-option">
+                  <form method='POST' action="{{ url_for('dashboard.home') }}">
+                      <label>Enter PCT:</label>
+                      <select class="custom-select" id="input-group-select" name="pct-option">
                         {% for item in pct_list %}
                         <option name="option-list" value="{{ item }}">{{ item }}</option>
                         {% endfor %}
                       </select>
-                      <input type="submit" value="Search" class="btn btn-outline-secondary" />
-                    </form>
-                    <hr />
-                    <table class="table">
+                    <input type="submit" value="Search" class="btn btn-outline-secondary" />
+                  </form>
+                  <hr />
+                  <table class="table">
                     <thead>
                       <td>Practice</td>
                       <td>BNF Code</td>
                       <td>BNF Name</td>
                       <td>Items (prescription items)</td>
                     </thead>
-                      <tbody>
+                    <tbody>
                       {% for row in pct_data %}
                         <tr>
                           <td>{{ row.practice }}</td>
@@ -369,13 +394,12 @@
                           <td>{{ row.items }}</td>
                         </tr>
                       {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-
+          </div>
 
           <!-- Creatinine clearance calculator -->
           <div id="creat-calc">
