@@ -29,6 +29,8 @@
   <script src="{{ url_for('static', filename='js/popup.js') }}"></script>
   <script src="{{ url_for('static', filename='js/ctc_calc.js') }}"></script>
   <!--<script src="{{ url_for('static', filename='js/bnfcode_name_table.js') }}"></script>-->
+  <script src="{{ url_for('static', filename='js/html2pdf.bundle.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/print_pdf.js') }}"></script>
 
   <!-- Page script -->
   <script type=text/javascript>
@@ -89,6 +91,12 @@
         </div>
       </li>
 
+      <li class="nav-item">
+        <div class="nav-link" onclick="print_summary_as_pdf();">
+          <i class="fas fa-download"></i>
+          <span id="about-text">Download the summary</span></div>
+      </li>
+
       <!-- Divider -->
       <hr class="sidebar-divider">
     </ul>
@@ -111,46 +119,48 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
+          <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+          <li class="nav-item dropdown no-arrow d-sm-none">
+            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <!-- Dropdown - Messages -->
+            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <form class="form-inline mr-auto w-100 navbar-search">
+                <div class="input-group">
+                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                      <i class="fas fa-search fa-sm"></i>
+                    </button>
                   </div>
-                </form>
-              </div>
-            </li>
+                </div>
+              </form>
+            </div>
+          </li>
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+          <div class="topbar-divider d-none d-sm-block"></div>
 
-              <!-- Sidebar Toggler (Sidebar) -->
-              <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-              </div>
+          <!-- Sidebar Toggler (Sidebar) -->
+          <div class="text-center d-none d-md-inline">
+            <button class="fas fa-bars" id="sidebarToggle"></button>
+          </div>
 
         </nav>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div id="printable_content" class="container-fluid">
 
           <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Prescribing Dashboard</h1>
+          <div id="page-header">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+              <h1 class="h3 mb-0 text-gray-800">Prescribing Dashboard</h1>
+            </div>
           </div>
 
           <!-- Content Row -->
-          <div class="row">
+          <div id="flashcards" class="row">
 
             <!-- Total items -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -192,11 +202,11 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">TOP PRESCRIBED ITEM:</div>
+                      <div class="d-inline text-xs font-weight-bold text-primary text-uppercase mb-1">TOP PRESCRIBED ITEM:</div>
+                      <div class="d-inline h5 mb-0 mr-3 font-weight-bold text-gray-800 text-xs"> {{ tile_data[2] }} </div>
                       <span class="text_col_black"></span>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"> {{ tile_data[2] }} </div>
                           <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"> {{ tile_data[3] }}%</div>
                         </div>
                         <div class="col">
@@ -231,15 +241,18 @@
               </div>
             </div>
           </div>
+          
+          <!-- Page break for pdf summary -->
+          <div class="pagebreak"></div> 
 
           <!-- Content Row -->
-          <div class="row">
+          <div id="barchartrow" class="row">
             <div class="col-xl-12 col-lg-7">
               <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div id="barheader" class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Prescribed items per Primary Care Trust (PCT)</h6>
                 </div>
-                <div class="card-body">
+                <div id="barcanvas" class="card-body">
                   <canvas id="bar-chart"></canvas>
                 </div>
               </div>
@@ -330,30 +343,35 @@
             }
           </script>
 
+          <!-- Page break for pdf summary -->
+          <div id="pagebreak" class="pagebreak"></div> 
+
           <!-- Content Row -->
           <div class="row last-row">
             <!-- Content Column -->
             <div class="col-xl-6">
               <!-- Infection treatment drugs -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Infection treatment drug as % of all infection treatments</h6>
-                </div>
-                <div class="card-body">
-                  <div class="container">
-                    <div class="row">
-                      <div class="col-md-12">
+              <div id="infectiondrug" class="container-fluid">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Infection treatment drug as % of all infection treatments</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
 
-                        {% for i in range(0,(Infection_name|length)) %}
-                          <h6 class="progress-title">{{Infection_name[i]}}: {{Infection_percentage[i]}}%</h6>
-                          <div class="progress">
-                            <div class="progress-bar" style="width:{{Infection_percentage[i]}}%; background:#FFA500;">
-                              <div class="progress-value"></div>
+                          {% for i in range(0,(Infection_name|length)) %}
+                            <h6 class="progress-title">{{Infection_name[i]}}: {{Infection_percentage[i]}}%</h6>
+                            <div class="progress">
+                              <div class="progress-bar" style="width:{{Infection_percentage[i]}}%; background:#FFA500;">
+                                <div class="progress-value"></div>
+                              </div>
                             </div>
-                          </div>
-                          <br/>
-                        {% endfor %}
+                            <br/>
+                          {% endfor %}
 
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -363,39 +381,41 @@
 
             <div class="col-xl-6">
               <!-- Show the BNF data for selected PCT -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">BNF data per PCT</h6>
-                </div>
-                <div class="card-body">
-                  <form method='POST' action="{{ url_for('dashboard.home') }}">
-                      <label>Enter PCT:</label>
-                      <select class="custom-select" id="input-group-select" name="pct-option">
-                        {% for item in pct_list %}
-                        <option name="option-list" value="{{ item }}">{{ item }}</option>
+              <div id="BNForitable" class="container-fluid">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">BNF data per PCT</h6>
+                  </div>
+                  <div class="card-body">
+                    <form method='POST' action="{{ url_for('dashboard.home') }}">
+                        <label>Enter PCT:</label>
+                        <select class="custom-select" id="input-group-select" name="pct-option">
+                          {% for item in pct_list %}
+                          <option name="option-list" value="{{ item }}">{{ item }}</option>
+                          {% endfor %}
+                        </select>
+                      <input type="submit" value="Search" class="btn btn-outline-secondary" />
+                    </form>
+                    <hr />
+                    <table class="table">
+                      <thead>
+                        <td>Practice</td>
+                        <td>BNF Code</td>
+                        <td>BNF Name</td>
+                        <td>Items (prescription items)</td>
+                      </thead>
+                      <tbody>
+                        {% for row in pct_data %}
+                          <tr>
+                            <td>{{ row.practice }}</td>
+                            <td>{{ row.BNF_code }}</td>
+                            <td>{{ row.BNF_name }}</td>
+                            <td>{{ row.items }}</td>
+                          </tr>
                         {% endfor %}
-                      </select>
-                    <input type="submit" value="Search" class="btn btn-outline-secondary" />
-                  </form>
-                  <hr />
-                  <table class="table">
-                    <thead>
-                      <td>Practice</td>
-                      <td>BNF Code</td>
-                      <td>BNF Name</td>
-                      <td>Items (prescription items)</td>
-                    </thead>
-                    <tbody>
-                      {% for row in pct_data %}
-                        <tr>
-                          <td>{{ row.practice }}</td>
-                          <td>{{ row.BNF_code }}</td>
-                          <td>{{ row.BNF_name }}</td>
-                          <td>{{ row.items }}</td>
-                        </tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -404,41 +424,43 @@
           <!-- Creatinine clearance calculator -->
           <div id="creat-calc">
             <div class="card">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Creatinine clearance calculator</h6>
-                </div>
-                <div class="card-body">
-                  <p>Sex of patient:</p>
-                  <div>
-                    <label class="radio-inline">
-                      <input type="radio" id="sexm" name="sex" value="m"> Male
-                    </label>
-                    <label class="radio-inline">
-                      <input type="radio" id="sexf" name="sex" value="f"> Female
-                    </label>
-                    <p>Age of patient (years):</p>
-                    <input type="number" min="1" max="120" name="patients-age" id="patients-age" />
-                    <br /><br />
-                    <p>Weight of patient (kg):</p>
-                    <input type="number" min="1" max="120" name="patients-weight" id="patients-weight" />
-                    <br /><br />
-                    <p>Serum creatinine (micromol/L):</p>
-                    <input type="number" min="1" max="120" name="patients-serum" id="patients-serum"/>
-                    <br />
-                  </div>
-                  <br />*when sex is unselected, male is selected
-                    <br>*when number not included, Not A Number will show
-                  <hr />
-                  <button type="button" class="btn btn-primary" onclick="calculateCTc();" id="ctc-button">Calculate</button>
-                  <button type="button" class="btn btn-danger" onclick="popup.hideCeatCalcFormPopup();">Close</button>
-                    <br /><br />
-                    <div id="ctc-results">
-                        <p>Results</p>
-                        <p>Creatinine Clearance (Cockcroft-Gault Equation): <span id="ctc"></span> mL/min.</p>
-                        <br />
-                    </div>
-                </div>
+              <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Creatinine clearance calculator</h6>
               </div>
+              <div class="card-body">
+                <p>Sex of patient:</p>
+                <div>
+                  <label class="radio-inline">
+                    <input type="radio" id="sexm" name="sex" value="m" onclick="modcal();" required> Male
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" id="sexf" name="sex" value="f" onclick="modcal();"> Female
+                  </label>
+                  <p>Age of patient (years):</p>
+                  <input type="number" min="1" max="100" name="patients-age" id="patients-age" onclick="modcal();" required/>
+                  <br /><br />
+                  <p>Weight of patient (kg):</p>
+                  <input type="number" min="20" max="120" name="patients-weight" id="patients-weight" onclick="modcal();" required/>
+                  <br /><br />
+                  <p>Height of patient (cm):</p>
+                  <input type="number" min="50" max="200" name="patients-weight" id="patients-height" onclick="modcal();"/>
+                  <br /><br />
+                  <p>Serum creatinine (micromol/L):</p>
+                  <input type="number" min="30" max="500" name="patients-serum" id="patients-serum" onclick="modcal();" required/>
+                  <br />
+                </div>
+                <hr />
+                <button type="button" class="btn btn-primary" onclick="calculateCTc();" id="ctc-button">Calculate</button>
+                <button type="button" class="btn btn-danger" onclick="popup.hideCeatCalcFormPopup();">Close</button>
+                <a class="btn" onclick="clrcal();"><i class="fas fa-undo"></i></a>
+                  <br /><br />
+                    <div id="ctc-results">
+                      <p><h2>Results</h2></p>
+                      <p><span id="warning"></span><br/><span id="ctc"></span></p>
+                      <br />
+                    </div>
+              </div>
+            </div>
           </div>
 
           <!-- About popup -->
@@ -453,29 +475,28 @@
                   </p>
                   <br />
                   <hr />
-                   <button type="button" class="btn btn-danger" onclick="popup.hideAboutPopup();">Close</button>
+                  <button type="button" class="btn btn-danger" onclick="popup.hideAboutPopup();">Close</button>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
         <!-- /.container-fluid -->
-
+        </div>
       </div>
       <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Alan Davies 2021</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
-
     </div>
     <!-- End of Content Wrapper -->
 
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+      <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+          <span>Copyright &copy; Alan Davies 2021</span>
+        </div>
+      </div>
+    </footer>
+    <!-- End of Footer -->
+    
   </div>
   <!-- End of Page Wrapper -->
 
