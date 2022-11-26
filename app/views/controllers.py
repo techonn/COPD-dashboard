@@ -34,7 +34,7 @@ def home():
         selected_pct_data = db_mod.get_n_data_for_PCT(str(pcts[0]), 5)
         GP_bar_data = generate_GP_barchart_data(str(pcts[0]))
         
-    selected_bnf_data = db_mod.get_n_data_for_BNF()
+    selected_bnf_data = [[[code],[name],[prac],[item],[avg]] for code,name,prac,item,avg in db_mod.get_n_data_for_BNF()]
     bnfs = [r for r, s, *t in selected_bnf_data]
 
     # prepare data

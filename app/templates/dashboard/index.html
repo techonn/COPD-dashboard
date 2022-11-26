@@ -31,6 +31,7 @@
   <!--<script src="{{ url_for('static', filename='js/bnfcode_name_table.js') }}"></script>-->
   <script src="{{ url_for('static', filename='js/html2pdf.bundle.js') }}"></script>
   <script src="{{ url_for('static', filename='js/print_pdf.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/table.js') }}"></script>
 
   <!-- Page script -->
   <script type=text/javascript>
@@ -40,16 +41,39 @@
         $(document).ready(function () {
             initializeMain();
             barChart.drawChart({{pct|tojson}}, "bar-chart");
-        });
-  </script>
-  <script type=text/javascript>
-        $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
-
-        // Run JavaScript functions when page ready
-        $(document).ready(function () {
-            initializeMain();
             barChart.drawChart({{gp_bar|tojson}}, "gp-bar-chart");
         });
+
+        /*function BNFSearch() {
+          var input, filter, table, tr, td_code, td_name, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("BNFtable");
+          tr = table.getElementsByTagName("tr")
+      
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            td_code = tr[i].getElementsByTagName("td")[0];
+            td_name = tr[i].getElementsByTagName("td")[1];
+            if (td_code||td_name) {
+              txtValue = (td_code.textContent || td_code.innerText).concat(" ").concat(td_name.textContext||td_name.innerText);
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        };*/
+        function BNFsearchv2(){
+          var input, filter, table, tr, td_code, td_name, i, txtValue, data;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+
+          //create table showing those accordingly
+          createTable({{ bnf_data | tojson }},'BNFbody', filter);
+
+        }
   </script>
 </head>
 
@@ -294,7 +318,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Prescription details based on BNF code/name</h6>
                   </div>
                   <div class="card-body">
-                    <input type="text" id="myInput" placeholder="Search for BNF Code/Name.." onkeyup="BNFSearch();"><hr />
+                    <input type="text" id="myInput" placeholder="Search for BNF Code/Name.." onkeyup="BNFsearchv2();"><hr />
                     <div id="table-scroll">
                       <table class="table" id="BNFtable">
                         <thead>
@@ -303,16 +327,7 @@
                           <th>Total Items Prescribed (prescription items)</th>
                           <th>Average Cost (£)</th>
                         </thead>
-                        <tbody>
-                          {% for row in bnf_data %}
-                            <tr>
-                              <td style="display:none;">{{ row.BNF_code }}</td>
-                              <td>{{ row.BNF_name }}</td>
-                              <td class="val">{{ row.BNF_total_practice }}</td>
-                              <td class="val">{{ row.BNF_total_item }}</td>
-                              <td class="val">{{'%0.2f'|format(row.BNF_average_cost)|float}}</td>
-                            </tr>
-                          {% endfor %}
+                        <tbody id="BNFbody">
                         </tbody>
                       </table>
                     </div>
@@ -321,29 +336,6 @@
               </div>
             </div>
           </div>
-          <script>
-            function BNFSearch() {
-              var input, filter, table, tr, td_code, td_name, i, txtValue;
-              input = document.getElementById("myInput");
-              filter = input.value.toUpperCase();
-              table = document.getElementById("BNFtable");
-              tr = table.getElementsByTagName("tr")
-          
-              // Loop through all table rows, and hide those who don't match the search query
-              for (i = 0; i < tr.length; i++) {
-                td_code = tr[i].getElementsByTagName("td")[0];
-                td_name = tr[i].getElementsByTagName("td")[1];
-                if (td_code||td_name) {
-                  txtValue = (td_code.textContent || td_code.innerText).concat(" ").concat(td_name.textContext||td_name.innerText);
-                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                  } else {
-                    tr[i].style.display = "none";
-                  }
-                }
-              }
-            }
-          </script>
 
           <!-- Page break for pdf summary -->
           <div id="pagebreak" class="pagebreak"></div> 
