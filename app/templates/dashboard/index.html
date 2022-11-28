@@ -50,7 +50,9 @@
           filter = input.value.toUpperCase();
           table = document.getElementById("BNFtable");
           tr = table.getElementsByTagName("tr")
-      
+          
+          {{testbnf|safe}}
+
           // Loop through all table rows, and hide those who don't match the search query
           for (i = 0; i < tr.length; i++) {
             td_code = tr[i].getElementsByTagName("td")[0];
@@ -437,7 +439,7 @@
                   <input type="number" min="20" max="120" name="patients-weight" id="patients-weight" onclick="modcal();" required/>
                   <br /><br />
                   <p>Height of patient (cm):</p>
-                  <input type="number" min="50" max="200" name="patients-weight" id="patients-height" onclick="modcal();"/>
+                  <input type="number" min="50" max="200" name="patients-height" id="patients-height" onclick="modcal();"/>
                   <br /><br />
                   <p>Serum creatinine (micromol/L):</p>
                   <input type="number" min="30" max="500" name="patients-serum" id="patients-serum" onclick="modcal();" required/>

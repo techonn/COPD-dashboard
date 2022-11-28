@@ -9,3 +9,5 @@
 *.pyc
 .DS_Store
 chromedriver.exe
+0.6.5
+.coverage

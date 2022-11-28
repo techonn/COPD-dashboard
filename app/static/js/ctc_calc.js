@@ -1,5 +1,4 @@
 function calculateCTc() {
-    alert("command R")
     var ctc;
     var sex = document.getElementsByName("sex");
     var patients_age = document.getElementById("patients-age").value;

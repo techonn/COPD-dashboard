@@ -63,7 +63,9 @@ def home():
                            #rendering HTML page for BNF table
                            bnf_list=bnfs, bnf_data=selected_bnf_data,
                            #rendering HTML page for GP table
-                           gp_bar={'data': GP_bar_values, 'labels': GP_bar_labels}
+                           gp_bar={'data': GP_bar_values, 'labels': GP_bar_labels},
+                           #send some data for test add
+                           testbnf = db_mod.get_practice_code_name()
                            )
 
 def generate_data_for_tiles(pct=None, n=None):
