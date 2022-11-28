@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
 
+
 class TestWebForm(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome('./chromedriver.exe')
@@ -42,8 +43,17 @@ class TestWebForm(unittest.TestCase):
             print("Loading took too much time!")
         driver.find_element_by_id("about-text").click()
         driver.close()
-        
-        
-        
+
+    def test_print_pdf(self):
+        driver = self.driver
+        driver.get('http://127.0.0.1:5000/dashboard/home/')
+        delay = 10 #seconds
+        try:
+            myElem = WebDriverWait(driver, delay).until(EC.presence_of_element_located((By.ID,"about-text1")))
+            print("Page is ready!")
+        except TimeoutException:
+            print("Loading took too much time!")
+        driver.find_element_by_id("pdfconvert").click()
+        driver.close()
 if __name__=="__main__":
     unittest.main()
