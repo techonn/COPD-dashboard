@@ -130,7 +130,7 @@ cd cyan
 
 Open terminal and run the following commands: <br />
 cd cyan <br />
-python run.py
+python run.py <br />
 enter link into internet browser: http://127.0.0.1:5000/dashboard/home
 
 ### Testing the Dashboard
